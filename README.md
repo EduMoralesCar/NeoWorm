@@ -1,36 +1,71 @@
-# 🐍 NeoWorm
+<div align="center">
+  <img src="https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React" />
+  <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite" />
+  <img src="https://img.shields.io/badge/Canvas-2D-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="Canvas 2D" />
+  <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel" />
+</div>
 
-**NeoWorm** es una reimaginación moderna del clásico juego Snake, construida con React y Canvas. Ofrece una experiencia de juego pulida con múltiples niveles, temas visuales dinámicos, power-ups y un sistema de progresión.
+<h1 align="center">🐍 NeoWorm</h1>
+
+<p align="center">
+  Reimaginación moderna del clásico Snake con Canvas 2D, temas dinámicos y sistema de niveles.
+</p>
+
+<div align="center">
+  <h3>
+    <a href="https://neoworm.vercel.app/">🚀 VER APLICACIÓN EN VIVO (VERCEL)</a>
+  </h3>
+</div>
 
 ---
 
-## ✨ Características
+## 🌟 Sobre el Proyecto
 
-- **Jugabilidad clásica mejorada** — Controla una serpiente, come fruta, crece y evita chocar contra las paredes o tu propio cuerpo.
-- **20×15 grid fijo** — El área de juego siempre tiene el mismo tamaño lógico, escala automáticamente a cualquier pantalla y zoom.
-- **10 Temas visuales** — Paletas de colores únicas que cambian dinámicamente al subir de nivel. También puedes seleccionar tu tema favorito desde la pantalla de inicio.
-- **Animaciones y detalles** — Partículas flotantes en el menú, ojos que parpadean, lengua bífida, escamas en el cuerpo y sombras glow.
-- **Menú de pausa** — Pausa/reanuda con clic o tecla Escape. Opciones para reiniciar o salir.
-- **HUD profesional** — Barra superior con puntuación, nivel y velocidad, más un botón de configuración.
-- **Sistema de niveles** — Cada 50 puntos subes de nivel: la velocidad aumenta y el tema cambia.
-- **Sonido (próximamente)** — Preparado para integración con Howler.js.
+**NeoWorm** es una versión moderna y pulida del clásico juego Snake, construida con **React 19** y **Canvas 2D**. El motor de juego está separado de la capa de UI de React, permitiendo un rendering eficiente sin dependencias cruzadas. Ofrece 10 temas visuales únicos, animaciones detalladas (ojos que parpadean, lengua bífida, escamas, partículas flotantes) y un sistema de progresión por niveles que acelera la partida y cambia la estética del juego dinámicamente.
 
 ---
 
-## 🛠 Stack Tecnológico
+## ✨ Mapeo Visual de Funcionalidades
 
-| Capa          | Tecnología                         |
-|---------------|------------------------------------|
-| Frontend      | React 19 + Vite                    |
-| Renderizado   | Canvas 2D (vanilla JS)             |
-| Estado        | useState / useReducer / custom hooks |
+### 🎮 1. Jugabilidad Clásica Mejorada
+- **Grid fijo 20×15:** Área de juego consistente en cualquier pantalla. Las celdas se escalan automáticamente con el tamaño de la ventana y el zoom del navegador.
+- **Control preciso:** Teclas de dirección (← → ↑ ↓) y WASD. La serpiente se mueve con un temporizador de paso fijo que se acelera al subir de nivel.
+- **Detección de colisiones:** Choque contra paredes (límites del grid) o contra el propio cuerpo de la serpiente — game over inmediato.
+
+### 🎨 2. Temas Visuales Dinámicos
+- **10 paletas de colores** creadas manualmente con combinaciones únicas de fondo, cuadrícula, serpiente y comida.
+- **Cambio automático por nivel:** Cada 50 puntos subes de nivel y el tema cambia automáticamente.
+- **Selector en pantalla de inicio:** El jugador puede elegir su tema favorito antes de comenzar.
+
+### 🐍 3. Animaciones y Detalles Visuales
+- **Serpiente con personalidad:** Cabeza redondeada con ojos que parpadean (animación cada 3 segundos), lengua bífida animada al moverse, cuerpo con efecto de escamas.
+- **Partículas en el menú:** 60 puntos verdes flotantes con movimiento browniano sobre un fondo animado con gradiente (`gradient-shift`).
+- **Efectos glow:** Sombra brillante en el título (`pulse-glow`), botón pulsante (`pulse-button`) y borde sutil del área de juego.
+
+### ⏸ 4. Menú de Pausa
+- Pausa/reanuda con clic en el botón de pausa del HUD o con la tecla **Escape**.
+- Opciones: **Reanudar**, **Reiniciar** (vuelve al mismo tema) y **Salir** (regresa al menú principal).
+- El estado de pausa congela completamente el juego (no se procesan inputs ni updates).
+
+### 📊 5. HUD Profesional
+- Barra superior con: **Puntuación**, **Nivel actual**, **Velocidad** (multiplicador).
+- Botón de pausa (icono "II") en la esquina superior derecha.
+
+---
+
+## 🛠️ Tecnologías Utilizadas
+
+| Capa          | Tecnología                          |
+|---------------|-------------------------------------|
+| Frontend      | React 19 + Vite                     |
+| Renderizado   | Canvas 2D API (vanilla JS)          |
+| Estado        | useState / useReducer / custom hooks|
 | Animaciones   | CSS keyframes + requestAnimationFrame |
-| Sonido        | Howler.js (planeado)               |
-| Persistencia  | LocalStorage / Supabase (planeado) |
+| Despliegue    | Vercel                              |
 
 ---
 
-## 📦 Instalación
+## 🚀 Despliegue Local
 
 ```bash
 git clone https://github.com/EduMoralesCar/NeoWorm.git
@@ -59,9 +94,8 @@ El servidor de desarrollo se abrirá en `http://localhost:5173`.
 | ← → ↑ ↓       | Mover la serpiente  |
 | W A S D        | Mover (alternativo) |
 | Escape         | Pausar / Reanudar   |
-| Gear (esquina) | Abrir menú de pausa  |
 
-- **Come la fruta** (círculo rojo/color del tema) para crecer y sumar puntos.
+- **Come la fruta** para crecer y sumar **10 puntos**.
 - **Cada 50 puntos** subes de nivel: la velocidad aumenta y el tema cambia.
 - **Si chocas** contra una pared o tu propio cuerpo, el juego termina.
 
@@ -71,35 +105,35 @@ El servidor de desarrollo se abrirá en `http://localhost:5173`.
 
 ```
 src/
-├── game/                   # Motor de juego (canvas puro, sin React)
+├── game/                       # Motor de juego (canvas puro, sin React)
 │   ├── engine/
-│   │   ├── Canvas.js       # Abstracción del canvas (resize, HiDPI)
-│   │   ├── GameLoop.js     # Bucle de tiempo fijo (requestAnimationFrame)
-│   │   └── InputHandler.js # Teclado (flechas + WASD)
+│   │   ├── Canvas.js           # Abstracción del canvas (resize, HiDPI)
+│   │   ├── GameLoop.js         # Bucle de tiempo fijo (requestAnimationFrame)
+│   │   └── InputHandler.js     # Teclado (flechas + WASD)
 │   ├── entities/
-│   │   ├── Snake.js        # Serpiente: segmentos, colisión, dibujo
-│   │   └── Food.js         # Comida: spawn aleatorio, dibujo
-│   ├── Game.js             # Orquestador: lógica principal, niveles, temas
-│   ├── themes.js           # 10 paletas de colores
-│   └── index.js            # Barrel export
-├── components/             # Componentes React
-│   ├── GameCanvas.jsx      # Canvas + loop + partículas menú
-│   ├── HUD.jsx             # Barra superior (score, nivel, pausa)
-│   ├── Layout.jsx          # Layout viewport completo
-│   ├── PauseMenu.jsx       # Menú de pausa (resume, restart, exit)
-│   └── ThemePicker.jsx     # Selector de temas en pantalla de inicio
+│   │   ├── Snake.js            # Serpiente: segmentos, colisión, dibujo
+│   │   └── Food.js             # Comida: spawn aleatorio, dibujo
+│   ├── Game.js                 # Orquestador: lógica principal, niveles, temas
+│   ├── themes.js               # 10 paletas de colores
+│   └── index.js                # Barrel export
+├── components/                 # Componentes React
+│   ├── GameCanvas.jsx          # Canvas + loop + partículas menú
+│   ├── HUD.jsx                 # Barra superior (score, nivel, pausa)
+│   ├── Layout.jsx              # Layout viewport completo
+│   ├── PauseMenu.jsx           # Menú de pausa (resume, restart, exit)
+│   └── ThemePicker.jsx         # Selector de temas en pantalla de inicio
 ├── hooks/
-│   └── useGameState.js     # Máquina de estados (menu/playing/paused/gameover)
-├── App.jsx                 # Punto de entrada, orquestación de pantallas
-├── main.jsx                # Mount de React
-└── index.css               # Estilos globales + keyframes animación
+│   └── useGameState.js         # Máquina de estados (menu/playing/paused/gameover)
+├── App.jsx                     # Punto de entrada, orquestación de pantallas
+├── main.jsx                    # Mount de React
+└── index.css                   # Estilos globales + keyframes animación
 ```
 
 ---
 
 ## 🏗 Arquitectura
 
-El proyecto separa claramente el **motor de juego** (capa de rendering puro con Canvas) de la **capa de interfaz** (React). El motor no depende de React; los componentes React envuelven y controlan el motor.
+El proyecto separa claramente el **motor de juego** (capa de rendering puro con Canvas 2D) de la **capa de interfaz** (React). El motor no depende de React; los componentes React envuelven y controlan el motor a través de `GameCanvas`, que actúa como puente.
 
 ```
 ┌─────────────────────────────────────────────────┐
@@ -137,22 +171,6 @@ Game.render(ctx, cellSize, ox, oy) → Snake.draw()
 Canvas 2D (píxeles en pantalla)
 ```
 
-### Diagrama de componentes
-
-```
-┌───────────┐     ┌──────────────┐     ┌──────────────┐
-│   App     │────▶│  GameCanvas  │────▶│    Game      │
-│ (estado)  │     │  (loop+input)│     │ (lógica)     │
-└─────┬─────┘     └──────────────┘     └──────┬───────┘
-      │                                       │
-      ▼                                       ▼
-┌───────────┐                        ┌──────────────┐
-│  HUD      │                        │  Snake       │
-│  PauseMenu│                        │  Food        │
-│  ThemePick│                        │  themes.js   │
-└───────────┘                        └──────────────┘
-```
-
 ---
 
 ## 📚 Documentación
@@ -185,6 +203,8 @@ npm run test:coverage # Próximamente
 - [x] MVP: mecánica básica de Snake en Canvas
 - [x] Integración React: menús, HUD
 - [x] Sistema de niveles y temas visuales
+- [x] Animaciones: partículas, ojos, lengua, escamas
+- [x] Grid fijo 20×15 con escalado responsive
 - [ ] Power-ups (escudo, velocidad, teletransporte)
 - [ ] Enemigos IA
 - [ ] Efectos de sonido (Howler.js)
@@ -192,7 +212,6 @@ npm run test:coverage # Próximamente
 - [ ] Skins de serpiente desbloqueables
 - [ ] Modo multijugador local
 - [ ] Leaderboard global (Supabase)
-- [ ] Despliegue en Vercel/Render
 
 ---
 
