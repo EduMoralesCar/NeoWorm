@@ -3,6 +3,7 @@ import Layout from './components/Layout';
 import GameCanvas from './components/GameCanvas';
 import HUD from './components/HUD';
 import PauseMenu from './components/PauseMenu';
+import ThemePicker from './components/ThemePicker';
 import { useGameState } from './hooks/useGameState';
 import { Game } from './game';
 
@@ -13,6 +14,7 @@ export default function App() {
   const [gameInstance, setGameInstance] = useState(null);
   const [score, setScore] = useState(0);
   const [level, setLevel] = useState(1);
+  const [themeIndex, setThemeIndex] = useState(null);
   const engineRef = useRef(null);
   const gameRef = useRef(null);
 
@@ -22,14 +24,14 @@ export default function App() {
     const gridWidth = Math.floor(canvas.width / GRID_SIZE);
     const gridHeight = Math.floor(canvas.height / GRID_SIZE);
     const game = new Game({
-      gridWidth, gridHeight, gridSize: GRID_SIZE,
+      gridWidth, gridHeight, gridSize: GRID_SIZE, themeIndex,
       onScore: (s) => setScore(s),
       onLevelUp: (l) => setLevel(l),
       onGameOver: () => gameOver(),
     });
     gameRef.current = game;
     return game;
-  }, [gameOver]);
+  }, [gameOver, themeIndex]);
 
   const handleCanvasReady = useCallback((engine) => { engineRef.current = engine; }, []);
 
@@ -78,6 +80,7 @@ export default function App() {
         {status === 'menu' && (
           <div style={styles.overlay}>
             <h1 style={styles.title}>NeoWorm</h1>
+            <ThemePicker selected={themeIndex} onSelect={setThemeIndex} />
             <button style={styles.button} onClick={handlePlay}>Play</button>
           </div>
         )}

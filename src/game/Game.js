@@ -1,9 +1,9 @@
 import { Snake } from './entities/Snake.js';
 import { Food } from './entities/Food.js';
-import { getTheme } from './themes.js';
+import { getTheme, THEMES } from './themes.js';
 
 export class Game {
-  constructor({ gridWidth, gridHeight, gridSize, onScore, onGameOver, onLevelUp }) {
+  constructor({ gridWidth, gridHeight, gridSize, onScore, onGameOver, onLevelUp, themeIndex }) {
     this.gridWidth = gridWidth;
     this.gridHeight = gridHeight;
     this.gridSize = gridSize;
@@ -15,7 +15,8 @@ export class Game {
     this.food = new Food();
     this.score = 0;
     this.level = 1;
-    this.theme = getTheme(1);
+    this.themeOffset = themeIndex ? themeIndex - 1 : 0;
+    this.theme = getTheme(1 + this.themeOffset);
     this.moveInterval = 200;
     this.moveTimer = 0;
     this.isOver = false;
@@ -40,7 +41,7 @@ export class Game {
         this.food.spawn(this.gridWidth, this.gridHeight, (x, y) => this.snake.occupies(x, y));
         if (this.score % 50 === 0) {
           this.level++;
-          this.theme = getTheme(this.level);
+          this.theme = getTheme(this.level + this.themeOffset);
           this.moveInterval = Math.max(60, this.moveInterval - 20);
           this.onLevelUp?.(this.level);
         }
