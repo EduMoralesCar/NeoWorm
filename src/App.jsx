@@ -7,7 +7,8 @@ import ThemePicker from './components/ThemePicker';
 import { useGameState } from './hooks/useGameState';
 import { Game } from './game';
 
-const GRID_SIZE = 32;
+const GRID_COLS = 20;
+const GRID_ROWS = 15;
 
 export default function App() {
   const { status, startGame, pauseGame, resumeGame, gameOver, goToMenu } = useGameState();
@@ -21,10 +22,8 @@ export default function App() {
   const createGame = useCallback(() => {
     const { canvas } = engineRef.current;
     if (!canvas) return null;
-    const gridWidth = Math.floor(canvas.width / GRID_SIZE);
-    const gridHeight = Math.floor(canvas.height / GRID_SIZE);
     const game = new Game({
-      gridWidth, gridHeight, gridSize: GRID_SIZE, themeIndex,
+      gridCols: GRID_COLS, gridRows: GRID_ROWS, themeIndex,
       onScore: (s) => setScore(s),
       onLevelUp: (l) => setLevel(l),
       onGameOver: () => gameOver(),
