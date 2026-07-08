@@ -1,5 +1,7 @@
 export class Food {
-  constructor() { this.position = { x: 0, y: 0 }; }
+  constructor() {
+    this.position = { x: 0, y: 0 };
+  }
 
   spawn(gridWidth, gridHeight, isOccupied) {
     let x, y;
@@ -15,7 +17,9 @@ export class Food {
     const cx = ox + x * cellSize + cellSize / 2;
     const cy = oy + y * cellSize + cellSize / 2;
     const r = cellSize / 2 - Math.max(3, cellSize * 0.08);
+
     const color = theme?.food || '#ff3344';
+    const highlight = theme?.foodHighlight || '#ff6677';
     const glow = theme?.foodGlow || '#ff3344';
 
     ctx.fillStyle = color;
@@ -25,5 +29,11 @@ export class Food {
     ctx.arc(cx, cy, r, 0, Math.PI * 2);
     ctx.fill();
     ctx.shadowBlur = 0;
+
+    ctx.fillStyle = highlight;
+    const hr = Math.max(2, cellSize * 0.08);
+    ctx.beginPath();
+    ctx.arc(cx - hr * 0.8, cy - hr * 0.8, hr, 0, Math.PI * 2);
+    ctx.fill();
   }
 }

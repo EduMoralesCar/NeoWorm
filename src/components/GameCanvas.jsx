@@ -1,11 +1,14 @@
 import { useRef, useEffect, useCallback } from 'react';
 import { Canvas, InputHandler } from '../game';
 
+const PARTICLE_COUNT = 60;
+
 export default function GameCanvas({ game, onReady }) {
   const canvasRef = useRef(null);
   const containerRef = useRef(null);
   const gameRef = useRef(game);
   gameRef.current = game;
+  const particlesRef = useRef(null);
 
   const handleResize = useCallback((canvas) => {
     const parent = containerRef.current;
@@ -22,6 +25,7 @@ export default function GameCanvas({ game, onReady }) {
     const input = new InputHandler();
     input.attach();
     handleResize(canvas);
+    particlesRef.current = createParticles(canvas.width, canvas.height);
 
     let lastTime = performance.now();
     let rafId;
@@ -32,11 +36,15 @@ export default function GameCanvas({ game, onReady }) {
       const clamped = Math.min(dt, 50);
 
       const currentGame = gameRef.current;
+      const isMenu = !currentGame;
 
       canvas.ctx.fillStyle = '#0a0a0a';
       canvas.ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      if (currentGame) {
+      if (isMenu) {
+        updateParticles(particlesRef.current, canvas.width, canvas.height, clamped);
+        drawParticles(canvas.ctx, particlesRef.current);
+      } else if (currentGame) {
         const t = currentGame.theme;
         canvas.ctx.fillStyle = t?.background || '#0a0a0a';
         canvas.ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -58,7 +66,10 @@ export default function GameCanvas({ game, onReady }) {
 
     rafId = requestAnimationFrame(loop);
 
-    const onResize = () => handleResize(canvas);
+    const onResize = () => {
+      handleResize(canvas);
+      if (particlesRef.current) particlesRef.current = createParticles(canvas.width, canvas.height);
+    };
     window.addEventListener('resize', onResize);
 
     if (onReady) onReady({ canvas, input });
@@ -88,4 +99,32 @@ function drawGrid(canvas, theme) {
   for (let y = 0; y <= height; y += gridSize) {
     ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(width, y); ctx.stroke();
   }
+}
+
+function createParticles(w, h) {
+  return Array.from({ length: PARTICLE_COUNT }, () => ({
+    x: Math.random() * w, y: Math.random() * h,
+    vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3,
+    r: Math.random() * 2 + 0.5, a: Math.random() * 0.4 + 0.1,
+  }));
+}
+
+function updateParticles(particles, w, h, dt) {
+  const speed = dt * 0.06;
+  for (const p of particles) {
+    p.x += p.vx * speed; p.y += p.vy * speed;
+    if (p.x < 0) p.x = w; if (p.x > w) p.x = 0;
+    if (p.y < 0) p.y = h; if (p.y > h) p.y = 0;
+  }
+}
+
+function drawParticles(ctx, particles) {
+  for (const p of particles) {
+    ctx.globalAlpha = p.a;
+    ctx.fillStyle = '#00ff44';
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.globalAlpha = 1;
 }

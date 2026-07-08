@@ -80,6 +80,7 @@ export default function App() {
         {status === 'menu' && (
           <div style={styles.overlay}>
             <h1 style={styles.title}>NeoWorm</h1>
+            <p style={styles.subtitle}>a classic snake reimagined</p>
             <ThemePicker selected={themeIndex} onSelect={setThemeIndex} />
             <button style={styles.button} onClick={handlePlay}>Play</button>
           </div>
@@ -103,16 +104,25 @@ const styles = {
   overlay: {
     position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column',
     alignItems: 'center', justifyContent: 'center',
-    background: 'rgba(0,0,0,0.85)', zIndex: 20, gap: '16px',
+    background: 'linear-gradient(135deg, #000000, #001a00, #000a10, #000000)',
+    backgroundSize: '400% 400%',
+    zIndex: 20, gap: '16px',
+    animation: 'gradient-shift 8s ease-in-out infinite',
   },
   title: {
-    color: '#0f0', fontFamily: 'monospace', fontSize: '2.5rem', margin: 0,
-    textShadow: '0 0 10px #0f0',
+    color: '#0f0', fontFamily: 'monospace', fontSize: '3rem', margin: 0,
+    letterSpacing: '6px', textTransform: 'uppercase',
+    animation: 'pulse-glow 2.5s ease-in-out infinite',
+  },
+  subtitle: {
+    color: '#666', fontFamily: 'monospace', fontSize: '0.8rem',
+    margin: '-8px 0 8px', letterSpacing: '3px', textTransform: 'uppercase',
   },
   scoreText: { color: '#fff', fontFamily: 'monospace', fontSize: '1.2rem', margin: 0 },
   button: {
-    padding: '12px 32px', fontSize: '1.1rem', fontFamily: 'monospace',
+    padding: '14px 48px', fontSize: '1.1rem', fontFamily: 'monospace',
     background: '#0f0', color: '#000', border: 'none', borderRadius: '4px',
     cursor: 'pointer', fontWeight: 'bold', textTransform: 'uppercase',
+    letterSpacing: '3px', animation: 'pulse-button 2s ease-in-out infinite',
   },
 };
