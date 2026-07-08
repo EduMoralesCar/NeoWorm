@@ -3,6 +3,7 @@ import { Canvas, InputHandler } from '../game';
 
 const COLS = 20;
 const ROWS = 15;
+const MAX_CELL_SIZE = 40;
 const PARTICLE_COUNT = 60;
 
 export default function GameCanvas({ game, status, onReady }) {
@@ -14,7 +15,7 @@ export default function GameCanvas({ game, status, onReady }) {
   const playAreaRef = useRef({ cellSize: 32, ox: 0, oy: 0 });
 
   const recalcPlayArea = useCallback((w, h) => {
-    const cellSize = Math.max(8, Math.floor(Math.min(w / COLS, h / ROWS)));
+    const cellSize = Math.max(8, Math.min(MAX_CELL_SIZE, Math.floor(Math.min(w / COLS, h / ROWS))));
     const pw = COLS * cellSize;
     const ph = ROWS * cellSize;
     playAreaRef.current = {
@@ -30,8 +31,11 @@ export default function GameCanvas({ game, status, onReady }) {
     const parent = containerRef.current;
     if (!parent) return;
     const rect = parent.getBoundingClientRect();
-    canvas.resize(rect.width, rect.height);
-    recalcPlayArea(rect.width, rect.height);
+    const maxH = window.innerHeight;
+    const w = rect.width;
+    const h = Math.min(rect.height, maxH);
+    canvas.resize(w, h);
+    recalcPlayArea(w, h);
   }, [recalcPlayArea]);
 
   useEffect(() => {
@@ -86,13 +90,14 @@ export default function GameCanvas({ game, status, onReady }) {
 
     rafId = requestAnimationFrame(loop);
 
-    const onResize = () => {
+    const ro = new ResizeObserver(() => {
       handleResize(canvas);
       if (particlesRef.current) {
         particlesRef.current = createParticles(canvas.width, canvas.height);
       }
-    };
-    window.addEventListener('resize', onResize);
+    });
+    const container = containerRef.current;
+    if (container) ro.observe(container);
 
     if (onReady) {
       onReady({ canvas, input });
@@ -101,7 +106,7 @@ export default function GameCanvas({ game, status, onReady }) {
     return () => {
       cancelAnimationFrame(rafId);
       input.detach();
-      window.removeEventListener('resize', onResize);
+      ro.disconnect();
     };
   }, [onReady, handleResize, recalcPlayArea]);
 
