@@ -33,7 +33,7 @@
 ## 📦 Instalación
 
 ```bash
-git clone https://github.com/tuusuario/neoworm.git
+git clone https://github.com/EduMoralesCar/NeoWorm.git
 cd neoworm
 npm install
 npm run dev
@@ -210,12 +210,10 @@ Las contribuciones son bienvenidas. Por favor, revisa la [Guía de Desarrollo](.
 
 ## 📄 Licencia
 
-MIT © 2026 — [Tu Nombre]
+MIT © 2026 — EduMoralesCar
 
 ---
 
 <div align="center">
   <sub>Hecho con ❤️ y 🐍</sub>
 </div>
-#   N e o W o r m  
- 
