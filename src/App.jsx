@@ -1,24 +1,24 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import Layout from './components/Layout';
 import GameCanvas from './components/GameCanvas';
 import HUD from './components/HUD';
+import PauseMenu from './components/PauseMenu';
 import { useGameState } from './hooks/useGameState';
 import { Game } from './game';
 
 const GRID_SIZE = 32;
 
 export default function App() {
-  const { status, startGame, gameOver, goToMenu } = useGameState();
+  const { status, startGame, pauseGame, resumeGame, gameOver, goToMenu } = useGameState();
   const [gameInstance, setGameInstance] = useState(null);
   const [score, setScore] = useState(0);
   const [level, setLevel] = useState(1);
   const engineRef = useRef(null);
+  const gameRef = useRef(null);
 
-  const handleCanvasReady = useCallback((engine) => { engineRef.current = engine; }, []);
-
-  const handlePlay = useCallback(() => {
+  const createGame = useCallback(() => {
     const { canvas } = engineRef.current;
-    if (!canvas) return;
+    if (!canvas) return null;
     const gridWidth = Math.floor(canvas.width / GRID_SIZE);
     const gridHeight = Math.floor(canvas.height / GRID_SIZE);
     const game = new Game({
@@ -27,19 +27,52 @@ export default function App() {
       onLevelUp: (l) => setLevel(l),
       onGameOver: () => gameOver(),
     });
-    setGameInstance(game);
-    setScore(0); setLevel(1);
-    startGame();
-  }, [startGame, gameOver]);
+    gameRef.current = game;
+    return game;
+  }, [gameOver]);
 
-  const handleMenu = useCallback(() => {
-    setGameInstance(null);
-    goToMenu();
+  const handleCanvasReady = useCallback((engine) => { engineRef.current = engine; }, []);
+
+  const handlePlay = useCallback(() => {
+    const game = createGame();
+    if (!game) return;
+    setGameInstance(game); setScore(0); setLevel(1); startGame();
+  }, [createGame, startGame]);
+
+  const handlePause = useCallback(() => {
+    const game = gameRef.current;
+    if (game && !game.isOver) { game.togglePause(); pauseGame(); }
+  }, [pauseGame]);
+
+  const handleResume = useCallback(() => {
+    const game = gameRef.current;
+    if (game) { game.togglePause(); resumeGame(); }
+  }, [resumeGame]);
+
+  const handleRestart = useCallback(() => {
+    const game = createGame();
+    if (!game) return;
+    setGameInstance(game); setScore(0); setLevel(1); startGame();
+  }, [createGame, startGame]);
+
+  const handleExit = useCallback(() => {
+    gameRef.current = null; setGameInstance(null); goToMenu();
   }, [goToMenu]);
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.code === 'Escape') {
+        if (status === 'playing') handlePause();
+        else if (status === 'paused') handleResume();
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [status, handlePause, handleResume]);
 
   return (
     <Layout>
-      {status === 'playing' && <HUD score={score} level={level} speed={level} />}
+      {status === 'playing' && <HUD score={score} level={level} speed={level} onPause={handlePause} />}
       <div style={{ flex: 1, position: 'relative' }}>
         <GameCanvas game={gameInstance} onReady={handleCanvasReady} />
         {status === 'menu' && (
@@ -48,11 +81,14 @@ export default function App() {
             <button style={styles.button} onClick={handlePlay}>Play</button>
           </div>
         )}
+        {status === 'paused' && (
+          <PauseMenu score={score} level={level} onResume={handleResume} onRestart={handleRestart} onExit={handleExit} />
+        )}
         {status === 'gameover' && (
           <div style={styles.overlay}>
             <h2 style={styles.title}>Game Over</h2>
             <p style={styles.scoreText}>Score: {score}</p>
-            <button style={styles.button} onClick={handleMenu}>Menu</button>
+            <button style={styles.button} onClick={handleRestart}>Play Again</button>
           </div>
         )}
       </div>
