@@ -13,7 +13,7 @@
 
 <div align="center">
   <h3>
-    <a href="https://neoworm.vercel.app/">🚀 VER APLICACIÓN EN VIVO (VERCEL)</a>
+    <a href="https://neoworm.vercel.app/">🚀 VER APLICACIÓN EN VIVO</a>
   </h3>
 </div>
 
