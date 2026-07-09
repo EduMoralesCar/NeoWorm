@@ -107,6 +107,3 @@ MIT © 2026 — EduMoralesCar
 
 ---
 
-<div align="center">
-  <sub>Hecho con ❤️ y 🐍</sub>
-</div>
