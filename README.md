@@ -19,13 +19,13 @@
 
 ---
 
-# 🌟 Sobre el Proyecto
+# Sobre el Proyecto
 
 **NeoWorm** es una versión moderna y pulida del clásico juego Snake, construida con **React 19** y **Canvas 2D**. El motor de juego está separado de la capa de UI de React, permitiendo un rendering eficiente sin dependencias cruzadas. Ofrece 10 temas visuales únicos, animaciones detalladas (ojos que parpadean, lengua bífida, escamas, partículas flotantes) y un sistema de progresión por niveles que acelera la partida y cambia la estética del juego dinámicamente.
 
 ---
 
-# ✨ Mapeo Visual de Funcionalidades
+# Mapeo Visual de Funcionalidades
 
 ## 1. Jugabilidad Clásica Mejorada
 - **Grid fijo 20×15:** Área de juego consistente en cualquier pantalla. Las celdas se escalan automáticamente con el tamaño de la ventana y el zoom del navegador.
@@ -53,7 +53,7 @@
 
 ---
 
-# 🛠️ Tecnologías Utilizadas
+# Tecnologías Utilizadas
 
 | Capa          | Tecnología                          |
 |---------------|-------------------------------------|
@@ -65,7 +65,7 @@
 
 ---
 
-# 🚀 Despliegue Local
+# Despliegue Local
 
 ```bash
 git clone https://github.com/EduMoralesCar/NeoWorm.git
@@ -87,7 +87,7 @@ El servidor de desarrollo se abrirá en `http://localhost:5173`.
 
 ---
 
-# 🎮 Cómo Jugar
+# Cómo Jugar
 
 | Tecla          | Acción              |
 |----------------|---------------------|
@@ -105,4 +105,4 @@ El servidor de desarrollo se abrirá en `http://localhost:5173`.
 
 MIT © 2026 — EduMoralesCar
 
-
+---
