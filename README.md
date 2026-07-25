@@ -105,3 +105,4 @@ El servidor de desarrollo se abrirá en `http://localhost:5173`.
 
 MIT © 2026 — EduMoralesCar
 
+---
