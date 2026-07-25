@@ -5,7 +5,7 @@
   <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel" />
 </div>
 
-<h1 align="center">🐍 NeoWorm</h1>
+<h1 align="center">NeoWorm</h1>
 
 <p align="center">
   Reimaginación moderna del clásico Snake con Canvas 2D, temas dinámicos y sistema de niveles.
